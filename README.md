@@ -46,3 +46,6 @@ Timestamp	Src IP	Dst IP	Protocol	Score	Anomaly
 
 ## 📚 Datasets
 - CIC-IDS2017 & UNSW-NB15
+
+
+Flowchart link: https://app.eraser.io/workspace/83NC47DnjOiRg5gxlERZ?origin=share
