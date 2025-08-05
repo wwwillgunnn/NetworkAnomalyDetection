@@ -18,19 +18,30 @@ This project detects anomalous patterns in network traffic using machine learnin
 
 ## 📂 Project Structure
 ├── data/               # Raw and preprocessed flow data
+
 ├── models/             # Trained ML models
+
 ├── src/
+
 │   ├── ingest.py       # Network data parsing & loading
+
 │   ├── features.py     # Feature extraction
+
 │   ├── detect.py       # Anomaly detection logic
+
 │   └── train.py        # Model training script
+
 ├── dashboard/          # Frontend code (optional)
+
 ├── README.md
+
 └── requirements.txt
 
 ## 📊 Sample Output
 Timestamp	Src IP	Dst IP	Protocol	Score	Anomaly
+
 2025-08-05 14:00	10.0.0.2	192.168.1.5	TCP	0.97	✅ Yes
+
 2025-08-05 14:01	10.0.0.3	192.168.1.10	UDP	0.23	❌ No
 
 ## 📚 Datasets
