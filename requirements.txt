@@ -1,6 +1,6 @@
 # See what requirements are needed then uncomment them here
-# pandas
-# scikit-learn
+pandas
+scikit-learn
 # joblib
 # fastapi
 # uvicorn
