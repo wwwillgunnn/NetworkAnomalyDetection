@@ -1,3 +1,14 @@
+''' TODO: MOdels needed for this part
+- autoendocer model (Will) # PyTorch autoencoder model (if using deep learning)
+- Isolation forest model (Neil)
+- standard scaler model (Neil)
+- cnn + lstm model (Will)
+
+- to evalute the model produce, confusiuon matrics and other forms of testing that we can see visuallt so we can see which is the best performing model
+'''
+
+
+
 import os
 import joblib
 from sklearn.ensemble import RandomForestClassifier
@@ -21,6 +32,7 @@ def train_model(dataset_name: str = "CIC-IDS2017"):
     # Load and featurize
     print(f"🔹 Loading dataset: {dataset_name}")
     raw_df = load_dataset(dataset_name)
+    print(raw_df.columns.tolist())
     X, y = prepare_features(raw_df, dataset_name)
 
     # Train/test split
