@@ -8,6 +8,7 @@ from ingest import load_dataset
 from features import prepare_features
 
 # Path to save trained models
+#Testing push
 MODEL_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "models")
 os.makedirs(MODEL_DIR, exist_ok=True)
 
