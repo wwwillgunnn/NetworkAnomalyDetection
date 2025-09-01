@@ -3,7 +3,6 @@
 - Isolation forest model (Neil)
 - standard scaler model (Neil)
 - cnn + lstm model (Will)
-- testing push
 
 - to evalute the model produce, confusiuon matrics and other forms of testing that we can see visuallt so we can see which is the best performing model
 '''
@@ -45,7 +44,7 @@ def train_model(dataset_name: str = "CIC-IDS2017"):
     )
 
     # Model
-    print("🔹 Training RandomForest...")
+    print("🔹 Training RandomForest, IsolationForest...")
     clf = RandomForestClassifier(
         n_estimators=100,
         random_state=42,
@@ -53,11 +52,20 @@ def train_model(dataset_name: str = "CIC-IDS2017"):
         class_weight="balanced"
     )
     clf.fit(X_train, y_train)
-    ifm = IsolationForest(n_estimators=100, contamination=0.05, random_state=42)
-    ifm.fit(X_train, y_train)
+
+    ifm = IsolationForest(
+        n_estimators=200,
+        max_samples="auto",
+        contamination=0.1,
+        max_features=0.7,
+        random_state=42)
+    ifm.fit(X_train)
+
+    #Predictions
+    raw_pred = ifm.predict(X_test)
+    y_pred = [1 if val == -1 else 0 for val in raw_pred]
 
     # Evaluation
-    y_pred = ifm.predict(X_test)
     acc = accuracy_score(y_test, y_pred)
     print(f"✅ Accuracy: {acc:.4f}")
     print("\nClassification Report:\n")
