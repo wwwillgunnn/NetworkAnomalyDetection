@@ -15,6 +15,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, accuracy_score
 from sklearn.ensemble import IsolationForest
+from sklearn.preprocessing import StandardScaler
 
 from ingest import load_dataset
 from features import prepare_features
@@ -43,6 +44,12 @@ def train_model(dataset_name: str = "CIC-IDS2017"):
         X, y, test_size=0.3, random_state=42, stratify=y
     )
 
+    # Scaler Standardisation?
+    # Is this a model or...?
+    ssm = StandardScaler()
+    X_scaled_train = ssm.fit_transform(X_train)
+    X_scaled_test = ssm.transform(X_test)
+
     # Model
     print("🔹 Training RandomForest, IsolationForest...")
     clf = RandomForestClassifier(
@@ -51,18 +58,18 @@ def train_model(dataset_name: str = "CIC-IDS2017"):
         n_jobs=-1,
         class_weight="balanced"
     )
-    clf.fit(X_train, y_train)
+    clf.fit(X_scaled_train, y_train)
 
     ifm = IsolationForest(
         n_estimators=200,
         max_samples="auto",
-        contamination=0.1,
+        contamination=0.05,
         max_features=0.7,
         random_state=42)
-    ifm.fit(X_train)
+    ifm.fit(X_scaled_train)
 
     #Predictions
-    raw_pred = ifm.predict(X_test)
+    raw_pred = ifm.predict(X_scaled_test)
     y_pred = [1 if val == -1 else 0 for val in raw_pred]
 
     # Evaluation
@@ -73,7 +80,7 @@ def train_model(dataset_name: str = "CIC-IDS2017"):
 
     # Save
     model_path = os.path.join(MODEL_DIR, f"{dataset_name}_rf.joblib")
-    joblib.dump(clf, model_path)
+    joblib.dump(ifm, model_path)
     print(f"💾 Model saved to {model_path}")
 
 
