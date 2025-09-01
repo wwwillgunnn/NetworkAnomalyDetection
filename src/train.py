@@ -63,7 +63,7 @@ def train_model(dataset_name: str = "CIC-IDS2017"):
     ifm = IsolationForest(
         n_estimators=200,
         max_samples="auto",
-        contamination=0.05,
+        contamination=0.1,
         max_features=0.7,
         random_state=42)
     ifm.fit(X_scaled_train)
