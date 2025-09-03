@@ -1,7 +1,10 @@
-# See what requirements are needed then uncomment them here
+seaborn
+numpy
+joblib
+matplotlib
 pandas
 scikit-learn
-# joblib
+torch
 # fastapi
 # uvicorn
 # pyshark
