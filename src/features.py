@@ -1,12 +1,14 @@
+# src/features.py
 import pandas as pd
-from sklearn.preprocessing import LabelEncoder, StandardScaler
+from sklearn.preprocessing import LabelEncoder
 from typing import Literal, Tuple
 
 DatasetName = Literal["CIC-IDS2017", "UNSW-NB15"]
 
 def prepare_features(df: pd.DataFrame, dataset: DatasetName) -> Tuple[pd.DataFrame, pd.Series]:
     """
-    Transform raw DataFrame into model-ready (X, y).
+    Transform raw DataFrame into model-ready (X, y), without scaling.
+    Scaling will be handled in train.py for consistency.
     """
 
     if dataset == "CIC-IDS2017":
@@ -34,7 +36,7 @@ def prepare_features(df: pd.DataFrame, dataset: DatasetName) -> Tuple[pd.DataFra
     else:
         raise ValueError(f"Unsupported dataset: {dataset}")
 
-    # Filter columns that actually exist in the df
+    # Keep only available cols
     available_cols = [c for c in cols_to_keep if c in df.columns]
     df = df[available_cols].copy()
 
@@ -57,15 +59,10 @@ def prepare_features(df: pd.DataFrame, dataset: DatasetName) -> Tuple[pd.DataFra
     if "proto" in df.columns:
         df["proto"] = proto_enc.fit_transform(df["proto"].astype(str))
 
+    # Encode y labels (Normal/Attack → 0/1)
     y = label_enc.fit_transform(df["label"].astype(str))
 
-    # Drop label from X
+    # Drop label from features
     X = df.drop(columns=["label"])
-
-    # Scale numeric features
-    scaler = StandardScaler()
-    X_scaled = scaler.fit_transform(X)
-
-    X = pd.DataFrame(X_scaled, columns=X.columns)
 
     return X, pd.Series(y, name="label")

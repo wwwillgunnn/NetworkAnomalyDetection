@@ -50,3 +50,11 @@ Timestamp	Src IP	Dst IP	Protocol	Score	Anomaly
 
 
 Flowchart link: https://app.eraser.io/workspace/83NC47DnjOiRg5gxlERZ?origin=share
+
+
+## Set up
+ensure you have git lfs on your system
+if your on mac, in the terminal run 
+brew install git-lfs
+run git lfs install 
+git lfs pull
