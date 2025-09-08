@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 
+# it's terrible rn could be: data preprocessing, loss function, or model initialization fix
 class Autoencoder(nn.Module):
     def __init__(self, input_dim: int):
         super(Autoencoder, self).__init__()

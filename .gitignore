@@ -1,0 +1,16 @@
+/models/CIC-IDS2017_autoencoder.pth
+/models/CIC-IDS2017_autoencoder_cm.png
+/data/processed/CIC-IDS2017_clean.csv
+/models/CIC-IDS2017_iforest.joblib
+/models/CIC-IDS2017_iforest_cm.png
+/models/CIC-IDS2017_rf.joblib
+/models/CIC-IDS2017_rf_cm.png
+/models/CIC-IDS2017_scaler.joblib
+/models/UNSW-NB15_autoencoder.pth
+/models/UNSW-NB15_autoencoder_cm.png
+/data/processed/UNSW-NB15_clean.csv
+/models/UNSW-NB15_iforest.joblib
+/models/UNSW-NB15_iforest_cm.png
+/models/UNSW-NB15_rf.joblib
+/models/UNSW-NB15_rf_cm.png
+/models/UNSW-NB15_scaler.joblib
