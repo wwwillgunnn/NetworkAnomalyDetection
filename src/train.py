@@ -11,13 +11,13 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, accuracy_score, confusion_matrix
 from sklearn.preprocessing import StandardScaler
 
-import torch
-import torch.nn as nn
-import torch.optim as optim
-from torch.utils.data import DataLoader, TensorDataset
+# import torch
+# import torch.nn as nn
+# import torch.optim as optim
+# from torch.utils.data import DataLoader, TensorDataset
 
 from features import load_processed, prepare_features
-from autoencoder import Autoencoder
+# from autoencoder import Autoencoder
 
 DatasetName = Literal["CIC-IDS2017", "UNSW-NB15"]
 
@@ -40,55 +40,55 @@ def plot_confusion(y_true, y_pred, title: str, save_path: str):
     print(f"📊 Confusion matrix saved → {save_path}")
 
 
-def train_autoencoder(X_train, X_test, y_test, dataset_name: str):
-    """Train a PyTorch Autoencoder for anomaly detection."""
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+# def train_autoencoder(X_train, X_test, y_test, dataset_name: str):
+    # """Train a PyTorch Autoencoder for anomaly detection."""
+    # device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    # Convert to PyTorch tensors
-    X_train_tensor = torch.tensor(X_train.values, dtype=torch.float32)
-    X_test_tensor = torch.tensor(X_test.values, dtype=torch.float32)
+    # # Convert to PyTorch tensors
+    # X_train_tensor = torch.tensor(X_train.values, dtype=torch.float32)
+    # X_test_tensor = torch.tensor(X_test.values, dtype=torch.float32)
 
-    train_loader = DataLoader(TensorDataset(X_train_tensor, X_train_tensor),
-                              batch_size=128, shuffle=True)
+    # train_loader = DataLoader(TensorDataset(X_train_tensor, X_train_tensor),
+    #                           batch_size=128, shuffle=True)
 
-    # Model, loss, optimizer
-    model = Autoencoder(input_dim=X_train.shape[1]).to(device)
-    criterion = nn.MSELoss()
-    optimizer = optim.Adam(model.parameters(), lr=1e-3)
+    # # Model, loss, optimizer
+    # model = Autoencoder(input_dim=X_train.shape[1]).to(device)
+    # criterion = nn.MSELoss()
+    # optimizer = optim.Adam(model.parameters(), lr=1e-3)
 
     # Training loop
-    epochs = 20
-    model.train()
-    for epoch in range(epochs):
-        total_loss = 0
-        for batch_X, _ in train_loader:
-            batch_X = batch_X.to(device)
-            optimizer.zero_grad()
-            outputs = model(batch_X)
-            loss = criterion(outputs, batch_X)
-            loss.backward()
-            optimizer.step()
-            total_loss += loss.item()
-        print(f"Epoch {epoch+1}/{epochs} - Loss: {total_loss/len(train_loader):.6f}")
+    # epochs = 20
+    # model.train()
+    # for epoch in range(epochs):
+    #     total_loss = 0
+    #     for batch_X, _ in train_loader:
+    #         batch_X = batch_X.to(device)
+    #         optimizer.zero_grad()
+    #         outputs = model(batch_X)
+    #         loss = criterion(outputs, batch_X)
+    #         loss.backward()
+    #         optimizer.step()
+    #         total_loss += loss.item()
+    #     print(f"Epoch {epoch+1}/{epochs} - Loss: {total_loss/len(train_loader):.6f}")
 
-    # Save model
-    model_path = os.path.join(MODEL_DIR, f"{dataset_name}_autoencoder.pth")
-    torch.save(model.state_dict(), model_path)
-    print(f"💾 Autoencoder model saved → {model_path}")
+    # # Save model
+    # model_path = os.path.join(MODEL_DIR, f"{dataset_name}_autoencoder.pth")
+    # torch.save(model.state_dict(), model_path)
+    # print(f"💾 Autoencoder model saved → {model_path}")
 
-    # Evaluation (reconstruction error threshold)
-    model.eval()
-    with torch.no_grad():
-        reconstructed = model(X_test_tensor.to(device)).cpu().numpy()
-        mse = np.mean(np.power(X_test.values - reconstructed, 2), axis=1)
+    # # Evaluation (reconstruction error threshold)
+    # model.eval()
+    # with torch.no_grad():
+    #     reconstructed = model(X_test_tensor.to(device)).cpu().numpy()
+    #     mse = np.mean(np.power(X_test.values - reconstructed, 2), axis=1)
 
-    threshold = np.percentile(mse, 95)  # 95th percentile
-    y_pred = (mse > threshold).astype(int)  # 1 = anomaly
+    # threshold = np.percentile(mse, 95)  # 95th percentile
+    # y_pred = (mse > threshold).astype(int)  # 1 = anomaly
 
-    acc = accuracy_score(y_test, y_pred)
-    print(f"✅ Autoencoder Accuracy: {acc:.4f}")
-    print(classification_report(y_test, y_pred))
-    plot_confusion(y_test, y_pred, f"{dataset_name} - Autoencoder", os.path.join(MODEL_DIR, f"{dataset_name}_autoencoder_cm.png"))
+    # acc = accuracy_score(y_test, y_pred)
+    # print(f"✅ Autoencoder Accuracy: {acc:.4f}")
+    # print(classification_report(y_test, y_pred))
+    # plot_confusion(y_test, y_pred, f"{dataset_name} - Autoencoder", os.path.join(MODEL_DIR, f"{dataset_name}_autoencoder_cm.png"))
 
 
 def train_models(dataset_name: DatasetName):
@@ -124,7 +124,7 @@ def train_models(dataset_name: DatasetName):
     plot_confusion(y_test, ifm_pred, f"{dataset_name} - IF", os.path.join(MODEL_DIR, f"{dataset_name}_iforest_cm.png"))
 
     # --- Autoencoder ---
-    train_autoencoder(X_train, X_test, y_test, dataset_name)
+    # train_autoencoder(X_train, X_test, y_test, dataset_name)
 
 
 if __name__ == "__main__":
