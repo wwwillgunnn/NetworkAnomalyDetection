@@ -14,8 +14,5 @@
 /models/UNSW-NB15_rf.joblib
 /models/UNSW-NB15_rf_cm.png
 /models/UNSW-NB15_scaler.joblib
-data/
-venv/
-__pycache__/
 *.pyc
 .idea/
